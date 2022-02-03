@@ -32,6 +32,7 @@ jobs:
         run: |
           python ./.github/bump-version.py $GITHUB_REF
           export res=$(python ./.github/bump-version.py $GITHUB_REF)
+          echo res
           echo "::set-output name=bump_list::${res}"
           echo "::set-output name=target_branch::$GITHUB_REF"
 
