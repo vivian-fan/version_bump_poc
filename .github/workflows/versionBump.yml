@@ -36,30 +36,30 @@ jobs:
           echo "::set-output name=bump_list::${vars}"
           echo "::set-output name=target_branch::$GITHUB_REF"
 
-#   update-yaml:
-#     needs: compute-version
+  update-yaml:
+    needs: compute-version
     
-#     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     
-#     strategy:
-#           matrix:
-#             node: ${{needs.compute-version.outputs.bump_list}}
+    strategy:
+          matrix:
+            node: ${{needs.compute-version.outputs.bump_list}}
 
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       
-#       - name: Update Version on Yaml File
-#         uses: fjogeleit/yaml-update-action@master
-#         with:
-#           valueFile: ${{ matrix.node[0] }}
-#           propertyPath: info.version
-#           value: ${{ matrix.node[1] }}
-#           commitChange: true
-#           updateFile: true
-#           targetBranch: ${{needs.compute-version.outputs.target_branch}}
-#           masterBranchName: master
-#           createPR: false
-#           branch:  ${{needs.compute-version.outputs.target_branch}}
-#           message: Bump version to ${{ matrix.node[1] }} in ${{ matrix.node[0] }}
+      - name: Update Version on Yaml File
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: ${{ matrix.node[0] }}
+          propertyPath: info.version
+          value: ${{ matrix.node[1] }}
+          commitChange: true
+          updateFile: true
+          targetBranch: ${{needs.compute-version.outputs.target_branch}}
+          masterBranchName: master
+          createPR: false
+          branch:  ${{needs.compute-version.outputs.target_branch}}
+          message: Bump version to ${{ matrix.node[1] }} in ${{ matrix.node[0] }}
       
