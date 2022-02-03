@@ -42,7 +42,7 @@ jobs:
     
     strategy:
           matrix:
-            node: ${{needs.compute-version.outputs.bump_list}}
+            node: ${{fromJson(needs.compute-version.outputs.bump_list)}}
 
     steps:
       - name: Checkout
@@ -51,13 +51,13 @@ jobs:
       - name: Update Version on Yaml File
         uses: fjogeleit/yaml-update-action@master
         with:
-          valueFile: ${{ matrix.node[0] }}
+          valueFile: ${{ matrix.node['file'] }}
           propertyPath: info.version
-          value: ${{ matrix.node[1] }}
+          value: ${{ matrix.node['version'] }}
           commitChange: true
           updateFile: true
           targetBranch: ${{needs.compute-version.outputs.target_branch}}
           masterBranchName: master
           createPR: false
           branch:  ${{needs.compute-version.outputs.target_branch}}
-          message: Bump version to ${{ matrix.node[1] }} in ${{ matrix.node[0] }}
+          message: Bump version to ${{ matrix.node['version'] }} in ${{ matrix.node['file'] }}
