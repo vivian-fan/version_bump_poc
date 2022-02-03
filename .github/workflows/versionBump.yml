@@ -43,7 +43,7 @@ jobs:
     
     strategy:
           matrix:
-            node: ${{needs.compute-version.outputs.bump_list}}
+            node: ${{fromJSON(needs.compute-version.outputs.bump_list)}}
 
     steps:
       - name: Checkout
