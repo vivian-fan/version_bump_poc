@@ -31,9 +31,8 @@ jobs:
         id: semver
         run: |
           python ./.github/bump-version.py $GITHUB_REF
-          export var=$(python ./.github/bump-version.py $GITHUB_REF)
-          vars=($var)
-          echo "::set-output name=bump_list::${vars}"
+          export res=$(python ./.github/bump-version.py $GITHUB_REF)
+          echo "::set-output name=bump_list::${res}"
           echo "::set-output name=target_branch::$GITHUB_REF"
 
   update-yaml:
@@ -43,7 +42,7 @@ jobs:
     
     strategy:
           matrix:
-            node: ${{fromJSON(needs.compute-version.outputs.bump_list)}}
+            node: ${{needs.compute-version.outputs.bump_list}}
 
     steps:
       - name: Checkout
