@@ -70,14 +70,16 @@ clone_repo_release = git.Repo.clone_from('https://github.com/vivian-fan/version_
 # Do a loop to calculate version for each root yaml file
 intents = get_intents()
 
-intent_list = {'include': []}
+# intent_list = {'include': []}
+intent_list = []
 
 for file_name, intent in intents['intent'].items():
   file = file_name + '.yml'
   latest_release_version = get_version_from_branch('./release', file)
   target_branch_version = get_version_from_branch('./' + target_branch, file)
   next_version = compute_version(intent, latest_release_version, target_branch_version)
-  intent_list['include'].append({"file": file, "version": next_version})
+#   intent_list['include'].append({"file": file, "version": next_version})
+  intent_list.append([file, intent])
   
 shutil.rmtree(release_path)
 shutil.rmtree(target_path)
