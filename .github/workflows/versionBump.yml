@@ -1,0 +1,64 @@
+name: Version Bump Automation
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+    types: [ closed ]
+
+jobs:
+  compute-version:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      bump_list: ${{ steps.semver.outputs.bump_list }}
+      target_branch: ${{ steps.semver.outputs.target_branch }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          chmod +x ./.github/intall-py-dependecies.sh
+          ./.github/intall-py-dependecies.sh
+          
+      - name: Run Computer Version Script
+        id: semver
+        run: |
+          export var=$(python ./.github/bump-version.py $GITHUB_REF)
+          vars=($var)
+          echo "::set-output name=bump_list::${vars}"
+          echo "::set-output name=target_branch::$GITHUB_REF"
+
+  update-yaml:
+    needs: compute-version
+    
+    runs-on: ubuntu-latest
+    
+    strategy:
+          matrix:
+            node: ${{needs.compute-version.outputs.bump_list}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Update Version on Yaml File
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: ${{ matrix.node[0] }}
+          propertyPath: info.version
+          value: ${{ matrix.node[1] }}
+          commitChange: true
+          updateFile: true
+          targetBranch: ${{needs.compute-version.outputs.target_branch}}
+          masterBranchName: master
+          createPR: false
+          branch:  ${{needs.compute-version.outputs.target_branch}}
+          message: Bump version to ${{ matrix.node[1] }} in ${{ matrix.node[0] }}
+      
