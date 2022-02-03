@@ -79,7 +79,7 @@ for file_name, intent in intents['intent'].items():
   target_branch_version = get_version_from_branch('./' + target_branch, file)
   next_version = compute_version(intent, latest_release_version, target_branch_version)
 #   intent_list['include'].append({"file": file, "version": next_version})
-  intent_list.append([file, intent])
+  intent_list.append([file, next_version])
   
 shutil.rmtree(release_path)
 shutil.rmtree(target_path)
