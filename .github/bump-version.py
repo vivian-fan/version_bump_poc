@@ -6,7 +6,7 @@ import git
 from json.decoder import JSONDecodeError
 
 def get_intents():
-    with open('./intent.txt', 'r') as intents_file:
+    with open('./intent.yml', 'r') as intents_file:
         intents_data = intents_file.read()
     intents = yaml.loads(intents_data)
     return intents
