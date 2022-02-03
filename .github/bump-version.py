@@ -6,10 +6,8 @@ import git
 from json.decoder import JSONDecodeError
 
 def get_intents():
-    with open('./intent.yml', 'r') as intents_file:
-        intents_data = intents_file.read()
-    intents = yaml.load(intents_data)
-    return intents
+    with open('intent.yml', 'r') as stream:
+        return yaml.safe_load(stream)
 
 def get_version_from_branch(branch_name, spec_file_name):
     spec_content = {}
