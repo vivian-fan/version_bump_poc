@@ -72,9 +72,7 @@ intents = get_intents()
 
 intent_list = []
 
-print('debug', intents)
-
-for file_name, intent in intents['intent']:
+for file_name, intent in intents['intent'].items():
   file = file_name + '.yml'
   latest_release_version = get_version_from_branch('./release', file)
   target_branch_version = get_version_from_branch('./' + target_branch, file)
