@@ -62,4 +62,3 @@ jobs:
           createPR: false
           branch:  ${{needs.compute-version.outputs.target_branch}}
           message: Bump version to ${{ matrix.node[1] }} in ${{ matrix.node[0] }}
-      
