@@ -68,11 +68,13 @@ latest_release_branch = release_branches[-1].replace('origin/', '')
 clone_repo_release = git.Repo.clone_from('https://github.com/vivian-fan/version_bump_poc.git', release_path, branch=latest_release_branch)
 
 # Do a loop to calculate version for each root yaml file
-intents = get_intents()['intent']
+intents = get_intents()
 
 intent_list = []
 
-for file_name, intent in intents:
+print('debug', intents)
+
+for file_name, intent in intents['intent']:
   file = file_name + '.yml'
   latest_release_version = get_version_from_branch('./release', file)
   target_branch_version = get_version_from_branch('./' + target_branch, file)
