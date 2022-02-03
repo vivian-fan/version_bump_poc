@@ -8,7 +8,7 @@ from json.decoder import JSONDecodeError
 def get_intents():
     with open('./intent.yml', 'r') as intents_file:
         intents_data = intents_file.read()
-    intents = yaml.loads(intents_data)
+    intents = yaml.load(intents_data)
     return intents
 
 def get_version_from_branch(branch_name, spec_file_name):
