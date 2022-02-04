@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.semver.outputs.matrix }}
+      branch_name: ${{ steps.branch_name.outputs.branch_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,8 +28,9 @@ jobs:
       - name: Run Computer Version Script
         id: semver
         run:  echo "::set-output name=matrix::$(python ./.github/bump-version.py $GITHUB_REF)"
-      - name: Check Matrix Output
-        run:  echo ${{steps.semver.outputs.matrix}}
+      - name: Get Branch Reference
+        id: branch_name
+        run: echo "::set-output name=branch_name::$GITHUB_REF"
         
   update-yaml:
     needs: version
@@ -47,8 +49,8 @@ jobs:
           value: ${{ matrix.version }}
           commitChange: true
           updateFile: true
-          targetBranch: ${{ $GITHUB_REF }}
+          targetBranch: ${{ needs.version.outputs.branch_name }}
           masterBranchName: master
           createPR: false
-          branch:  ${{ $GITHUB_REF }}
+          branch:  ${{ needs.version.outputs.branch_name }}
           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
