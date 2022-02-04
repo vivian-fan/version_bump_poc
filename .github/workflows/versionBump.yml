@@ -34,7 +34,6 @@ jobs:
     needs: version
     runs-on: ubuntu-latest
     steps:
-      
       - name: Check Matrix Output
         run:  echo ${{ needs.version.outputs.matrix }}
 
