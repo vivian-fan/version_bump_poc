@@ -32,7 +32,7 @@ jobs:
         run: |
           str=$(python ./.github/bump-version.py $GITHUB_REF)
           IFS=; read -ra ary <<<"$str"
-          for key in "${!ary[@]}"; do IFS=; read -ra item <<<"${ary[$key]"|ary[$key]=$item; done
+          for key in "${!ary[@]}"; do IFS=, read -ra item <<<"${ary[$key]"|ary[$key]=$item; done
           echo "::set-output name=bump_list::$ary"
           echo "::set-output name=target_branch::$GITHUB_REF"
           
