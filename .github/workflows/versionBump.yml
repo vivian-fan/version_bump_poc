@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      bump_list: ${{ steps.semver.outputs.bump_list }}
+      bump_list: ${{ steps.jqid.outputs.bump_list }}
       target_branch: ${{ steps.semver.outputs.target_branch }}
     
     steps:
@@ -32,10 +32,16 @@ jobs:
         run: |
           python ./.github/bump-version.py $GITHUB_REF
           res=$?
-          echo $res
-          type(res)
-          echo "::set-output name=bump_list::$array"
+          echo "::set-output name=content::$res"
           echo "::set-output name=target_branch::$GITHUB_REF"
+          
+      - name: use output
+        id: jqid
+        run: |
+          echo $content | jq '.'
+          echo "::set-output name=bump_list::$content"
+        env:
+          content: ${{ steps.semver.outputs.content}}
 
   update-yaml:
     needs: compute-version
@@ -44,7 +50,7 @@ jobs:
     
     strategy:
           matrix:
-            node: ${{needs.compute-version.outputs.bump_list}}
+            node: ${{fromJson(needs.compute-version.outputs.bump_list}}
 
     steps:
       - name: Checkout
