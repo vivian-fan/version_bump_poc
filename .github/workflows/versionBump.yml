@@ -31,10 +31,11 @@ jobs:
         id: semver
         run: |
           res=$(python ./.github/bump-version.py $GITHUB_REF)
-          echo $res
-          echo "::set-output name=bump_list::$res"
+          matrix=$((
+            echo $res
+          ) | jq -c .)
+          echo "::set-output name=bump_list::$matrix"
           echo "::set-output name=target_branch::$GITHUB_REF"
-          echo $bump_list
 
   update-yaml:
     needs: compute-version
