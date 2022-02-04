@@ -31,9 +31,8 @@ jobs:
         id: semver
         run: |
           python ./.github/bump-version.py $GITHUB_REF
-          export str=$(python ./.github/bump-version.py $GITHUB_REF)
-          read -a array <<< $str
-          echo ${array[0]}
+          res = $?
+          echo ${res[0]}
           echo "::set-output name=bump_list::$array"
           echo "::set-output name=target_branch::$GITHUB_REF"
 
