@@ -30,7 +30,7 @@ jobs:
       - name: Run Computer Version Script
         id: semver
         run: |
-          res = python ./.github/bump-version.py $GITHUB_REF
+          res=$(python ./.github/bump-version.py $GITHUB_REF)
           echo $res
           bump_list=$(echo $res | jq '.' )
           echo "::set-output name=bump_list::$bump_list"
