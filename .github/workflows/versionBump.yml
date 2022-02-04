@@ -31,7 +31,9 @@ jobs:
         id: semver
         run: |
           str=$(python ./.github/bump-version.py $GITHUB_REF)
+          echo $str
           IFS=; read -ra ary <<<"$str"
+          echo $ary
           for key in "${!ary[@]}"; do IFS=, read -ra item <<<"${ary[$key]"|ary[$key]=$item; done
           echo "::set-output name=bump_list::$ary"
           echo "::set-output name=target_branch::$GITHUB_REF"
