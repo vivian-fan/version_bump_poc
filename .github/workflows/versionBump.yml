@@ -36,25 +36,19 @@ jobs:
     strategy:
       matrix: ${{fromJSON(needs.version.outputs.matrix)}}
     steps:
-      - name: Check Matrix Output
-        run: echo ${{ needs.version.outputs.matrix }}
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Check Matrix Output JSON
-        run: echo ${{ toJSON(needs.version.outputs.matrix) }}
-
-#       - name: Checkout
-#         uses: actions/checkout@v2
-
-#       - name: Update Version on Yaml File
-#         uses: fjogeleit/yaml-update-action@master
-#         with:
-#           valueFile: ${{ matrix.file }}
-#           propertyPath: info.version
-#           value: ${{ matrix.version }}
-#           commitChange: true
-#           updateFile: true
-#           targetBranch: $GITHUB_REF
-#           masterBranchName: master
-#           createPR: false
-#           branch: $GITHUB_REF
-#           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
+      - name: Update Version on Yaml File
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: ${{ matrix.file }}
+          propertyPath: info.version
+          value: ${{ matrix.version }}
+          commitChange: true
+          updateFile: true
+          targetBranch: $GITHUB_REF
+          masterBranchName: master
+          createPR: false
+          branch: $GITHUB_REF
+          message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
