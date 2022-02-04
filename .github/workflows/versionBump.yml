@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      bump_list: ${{ steps.set-matrix.outputs.matrix }}
+      bump_list: ${{ steps.semver.outputs.bump_list }}
       target_branch: ${{ steps.semver.outputs.target_branch }}
     
     steps:
@@ -30,22 +30,11 @@ jobs:
       - name: Run Computer Version Script
         id: semver
         run: |
-          res=$(python ./.github/bump-version.py $GITHUB_REF)
-          echo "::set-output name=bump_list::$res"
+          str=$(python ./.github/bump-version.py $GITHUB_REF)
+          IFS=; read -ra ary <<<"$str"
+          for key in "${!ary[@]}"; do IFS=; read -ra item <<<"${ary[$key]"|ary[$key]=$item; done
+          echo "::set-output name=bump_list::$ary"
           echo "::set-output name=target_branch::$GITHUB_REF"
-          
-      - name: create-json
-        id: create-json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "new_version.json"
-          json: ${{steps.semver.outputs.bump_list}}
-          
-      - name: set-matrix
-        id: set-matrix
-        run: |
-          JSON=$(cat ./new_version.json)
-          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
           
   update-yaml:
     needs: compute-version
@@ -54,7 +43,7 @@ jobs:
     
     strategy:
           matrix:
-            node: ${{fromJson(needs.compute-version.outputs.bump_list)}}
+            node: ${{needs.compute-version.outputs.bump_list}}
 
     steps:
       - name: Checkout
