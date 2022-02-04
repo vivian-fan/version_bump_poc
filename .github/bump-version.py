@@ -87,4 +87,4 @@ for file_name, intent in intents['intent'].items():
 shutil.rmtree(release_path)
 shutil.rmtree(target_path)
 
-print(json.dump(intent_list))
+print(json.dumps(intent_list).replace('"', '\\"'))
