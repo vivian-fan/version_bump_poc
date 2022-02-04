@@ -2,17 +2,17 @@ name: Version Bump Automation
 
 on:
   pull_request:
-    branches: [ master, develop ]
-    types: [ closed ]
+    branches: [master, develop]
+    types: [closed]
 
 jobs:
   compute-version:
     runs-on: ubuntu-latest
-    
+
     outputs:
       bump_list: ${{ steps.semver.outputs.bump_list }}
       target_branch: ${{ steps.semver.outputs.target_branch }}
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,47 +20,41 @@ jobs:
       - name: Install Python3
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install Dependencies
         run: |
           chmod +x ./.github/intall-py-dependecies.sh
           ./.github/intall-py-dependecies.sh
-          
+
       - name: Run Computer Version Script
         id: semver
         run: |
           str=$(python ./.github/bump-version.py $GITHUB_REF)
           echo $str
-          IFS=; read -ra ary <<<"$str"
-          echo $ary
-          for key in "${!ary[@]}"; do IFS=, read -ra item <<<"${ary[$key]"|ary[$key]=$item; done
-          echo "::set-output name=bump_list::$ary"
+          echo "::set-output name=bump_list::$str"
           echo "::set-output name=target_branch::$GITHUB_REF"
-          
+
   update-yaml:
     needs: compute-version
-    
     runs-on: ubuntu-latest
-    
     strategy:
-          matrix:
-            node: ${{needs.compute-version.outputs.bump_list}}
+      matrix: ${{fromJson(needs.cmpute-version.outputs.bump_list)}}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Update Version on Yaml File
         uses: fjogeleit/yaml-update-action@master
         with:
-          valueFile: ${{ matrix.node['file'] }}
+          valueFile: ${{ matrix.file }}
           propertyPath: info.version
-          value: ${{ matrix.node['version'] }}
+          value: ${{ matrix.version }}
           commitChange: true
           updateFile: true
           targetBranch: ${{needs.compute-version.outputs.target_branch}}
           masterBranchName: master
           createPR: false
-          branch:  ${{needs.compute-version.outputs.target_branch}}
-          message: Bump version to ${{ matrix.node['version'] }} in ${{ matrix.node['file'] }}
+          branch: ${{needs.compute-version.outputs.target_branch}}
+          message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
