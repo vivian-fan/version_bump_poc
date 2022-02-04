@@ -31,26 +31,27 @@ jobs:
         run:  echo "::set-output name=matrix::$(python ./.github/bump-version.py $GITHUB_REF)"
       - name: Check Matrix Output
         run:  echo ${{steps.semver.outputs.matrix}}
+        
   update-yaml:
     needs: compute-version
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{fromJson(needs.compute-version.outputs.matrix)}}
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Check Matrix Output
+        run:  echo ${{fromJson(needs.compute-version.outputs.matrix)}}
 
-      - name: Update Version on Yaml File
-        uses: fjogeleit/yaml-update-action@master
-        with:
-          valueFile: ${{ matrix.file }}
-          propertyPath: info.version
-          value: ${{ matrix.version }}
-          commitChange: true
-          updateFile: true
-          targetBranch: $GITHUB_REF
-          masterBranchName: master
-          createPR: false
-          branch: $GITHUB_REF
-          message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       - name: Update Version on Yaml File
+#         uses: fjogeleit/yaml-update-action@master
+#         with:
+#           valueFile: ${{ matrix.file }}
+#           propertyPath: info.version
+#           value: ${{ matrix.version }}
+#           commitChange: true
+#           updateFile: true
+#           targetBranch: $GITHUB_REF
+#           masterBranchName: master
+#           createPR: false
+#           branch: $GITHUB_REF
+#           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
