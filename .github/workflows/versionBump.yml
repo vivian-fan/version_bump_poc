@@ -47,8 +47,8 @@ jobs:
           value: ${{ matrix.version }}
           commitChange: true
           updateFile: true
-          targetBranch: $GITHUB_REF
+          targetBranch: ${{ $GITHUB_REF }}
           masterBranchName: master
           createPR: false
-          branch: $GITHUB_REF
+          branch:  ${{ $GITHUB_REF }}
           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
