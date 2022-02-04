@@ -38,7 +38,7 @@ jobs:
         run:  echo ${{ needs.version.outputs.matrix }}
 
       - name: Check Matrix Output JSON
-        run:  echo ${{fromJson(needs.version.outputs.matrix)}}
+        run:  echo ${{fromJSON(needs.version.outputs.matrix)}}
 
 #       - name: Checkout
 #         uses: actions/checkout@v2
