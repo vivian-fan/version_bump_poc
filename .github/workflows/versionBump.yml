@@ -29,7 +29,8 @@ jobs:
       - name: Run Computer Version Script
         id: semver
         run:  echo "::set-output name=matrix::$(python ./.github/bump-version.py $GITHUB_REF)"
-
+      - name: Check Matrix Output
+        run:  echo ${{steps.semver.outputs.matrix}}
   update-yaml:
     needs: compute-version
     runs-on: ubuntu-latest
