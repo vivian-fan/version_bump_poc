@@ -3,6 +3,7 @@ import sys
 import shutil
 import yaml
 import git
+import json
 from json.decoder import JSONDecodeError
 
 def get_intents():
@@ -86,4 +87,4 @@ for file_name, intent in intents['intent'].items():
 shutil.rmtree(release_path)
 shutil.rmtree(target_path)
 
-print(intent_list)
+print(json.dump(intent_list))
