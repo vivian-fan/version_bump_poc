@@ -33,6 +33,8 @@ jobs:
   update-yaml:
     needs: version
     runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{toJSON(needs.version.outputs.matrix)}}
     steps:
       - name: Check Matrix Output
         run: echo ${{ needs.version.outputs.matrix }}
