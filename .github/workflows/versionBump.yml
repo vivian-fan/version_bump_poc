@@ -6,12 +6,10 @@ on:
     types: [closed]
 
 jobs:
-  compute-version:
+  version:
     runs-on: ubuntu-latest
-
     outputs:
       matrix: ${{ steps.semver.outputs.matrix }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,11 +31,14 @@ jobs:
         run:  echo ${{steps.semver.outputs.matrix}}
         
   update-yaml:
-    needs: compute-version
+    needs: version
     runs-on: ubuntu-latest
     steps:
       - name: Check Matrix Output
-        run:  echo ${{fromJson(needs.compute-version.outputs.matrix)}}
+        run:  echo ${{ needs.version.outputs.matrix }}
+
+      - name: Check Matrix Output JSON
+        run:  echo ${{fromJson(needs.version.outputs.matrix)}}
 
 #       - name: Checkout
 #         uses: actions/checkout@v2
