@@ -26,7 +26,9 @@ jobs:
           ./.github/intall-py-dependecies.sh
 
       - name: Run Add Intent Script
-        run:  python ./.github/add_intent.py $GITHUB_REF
+        env:
+            USER_PASSWORD: ${{ secrets.TOKEN }}
+        run:  python ./.github/add_intent.py $GITHUB_REF $USER_PASSWORD
 
       - name: Run Computer Version Script
         id: semver
