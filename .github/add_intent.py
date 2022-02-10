@@ -10,6 +10,7 @@ import json
 # Because the intent has been merged from feature branch to target branch
 # We can get it from target branch
 target_branch = str(sys.argv[1])
+intent_id = str(sys.argv[2])
 
 target_path = './' + target_branch
 if os.path.exists(target_path):
@@ -34,7 +35,7 @@ with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
 
 # Append intent in intent_list
 for file_key in intent_file_content['intent']:
-    intent_mgmt_content['intent'][file_key].append(intent_file_content['intent'][file_key])
+    intent_mgmt_content['intent'][file_key].append({'id': intent_id, 'intent': intent_file_content['intent'][file_key]})
     
 with open(target_path + '/.github/intent.yml', 'w') as intent_mgmt_file:
     intent_mgmt_file.seek(0)
