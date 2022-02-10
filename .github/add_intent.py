@@ -29,5 +29,16 @@ with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
 print('debug:', 'intent_file: ', intent_file_content, 'intent_mgmt_file: ', intent_mgmt_content)
 
 # Append intent in intent_list
+for file_key in intent_file_content['intent']:
+    intent_mgmt_content['intent'][file_key].append(intent_file_content['intent'][file_key])
+    
+with open(target_path + '/.github/intent.yml', 'w') as intent_mgmt_file:
+    intent_mgmt_file.seek(0)
+    intent_mgmt_file.write( yaml.dump(intent_mgmt_content, default_flow_style=False))
+    
+
+with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
+    intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
+print('debug', 'intent_mgmt_content after add: ', intent_mgmt_file)
 
 # Push back to target branch
