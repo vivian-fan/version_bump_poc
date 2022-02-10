@@ -3,11 +3,14 @@ intent:
   - minor
   - major
   - minor
+  - minor
   external:
   - minor
+  - major
   - major
   - major
   internal:
   - minor
   - major
   - minor
+  - major
