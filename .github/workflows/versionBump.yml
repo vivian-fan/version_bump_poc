@@ -28,7 +28,7 @@ jobs:
       - name: Run Add Intent Script
         env:
             USER_PASSWORD: ${{ secrets.TOKEN }}
-        run:  python ./.github/add_intent.py $GITHUB_REF $USER_PASSWORD $GITHUB_SHA
+        run:  python ./.github/add_intent.py $GITHUB_REF $USER_PASSWORD $GITHUB_HEAD_REF
 
       - name: Run Computer Version Script
         id: semver
@@ -37,12 +37,6 @@ jobs:
       - name: Get Branch Reference
         id: branch_name
         run: echo "::set-output name=branch_name::$GITHUB_REF"
-        
-      - name: Get base branch
-        run: echo $GITHUB_BASE_REF
-        
-      - name: Get source branch
-        run: echo $GITHUB_HEAD_REF
         
 #   update-yaml:
 #     needs: version
