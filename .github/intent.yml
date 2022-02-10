@@ -1,16 +1,4 @@
 intent:
-  data_science:
-  - minor
-  - major
-  - minor
-  - minor
-  external:
-  - minor
-  - major
-  - major
-  - major
-  internal:
-  - minor
-  - major
-  - minor
-  - major
+  data_science: []
+  external: []
+  internal: []
