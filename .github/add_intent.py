@@ -35,7 +35,6 @@ for file_key in intent_file_content['intent']:
 with open(target_path + '/.github/intent.yml', 'w') as intent_mgmt_file:
     intent_mgmt_file.seek(0)
     intent_mgmt_file.write( yaml.dump(intent_mgmt_content, default_flow_style=False))
-    
 
 with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
     intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
