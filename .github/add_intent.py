@@ -16,7 +16,11 @@ if os.path.exists(target_path):
     shutil.rmtree(target_path)
 os.mkdir(target_path)
 
-clone_repo_target = git.Repo.clone_from('https://github.com/vivian-fan/version_bump_poc.git', target_path, branch=target_branch)
+username = "vivian-fan"
+password = sys.argv[2]
+remote = f"https://{username}:{password}@github.com/vivian-fan/version_bump_poc.git"
+
+clone_repo_target = git.Repo.clone_from(remote, target_path, branch=target_branch)
 
 with open(target_path + '/intent.yml', 'r') as intent_file:
     intent_file_content = yaml.safe_load(intent_file)
@@ -26,7 +30,7 @@ with open(target_path + '/intent.yml', 'r') as intent_file:
 with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
     intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
     
-print('debug:', 'intent_file: ', intent_file_content, 'intent_mgmt_file: ', intent_mgmt_content)
+# print('debug:', 'intent_file: ', intent_file_content, 'intent_mgmt_file: ', intent_mgmt_content)
 
 # Append intent in intent_list
 for file_key in intent_file_content['intent']:
@@ -38,6 +42,13 @@ with open(target_path + '/.github/intent.yml', 'w') as intent_mgmt_file:
 
 with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
     intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
-print('debug', 'intent_mgmt_content after add: ', intent_mgmt_content)
+# print('debug', 'intent_mgmt_content after add: ', intent_mgmt_content)
 
 # Push back to target branch
+try:
+    repo = git.Repo(target_path)
+    repo.git.add(update=True)
+    repo.index.commit('add intent to' + target_branch)
+    repo.git.push("origin", target_branch)
+except Exception as e:
+    print('Errors occured while pushing the code', e) 
