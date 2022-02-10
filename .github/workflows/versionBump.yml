@@ -38,6 +38,9 @@ jobs:
         id: branch_name
         run: echo "::set-output name=branch_name::$GITHUB_REF"
         
+      - name: Print GITHUB_SHA
+        run: echo $GITHUB_SHA
+        
 #   update-yaml:
 #     needs: version
 #     runs-on: ubuntu-latest
