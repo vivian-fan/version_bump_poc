@@ -39,6 +39,6 @@ with open(target_path + '/.github/intent.yml', 'w') as intent_mgmt_file:
 
 with open(target_path + '/.github/intent.yml', 'r') as intent_mgmt_file:
     intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
-print('debug', 'intent_mgmt_content after add: ', intent_mgmt_file)
+print('debug', 'intent_mgmt_content after add: ', intent_mgmt_content)
 
 # Push back to target branch
