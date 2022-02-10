@@ -1,7 +1,10 @@
 intent:
   data_science:
   - minor
+  - major
   external:
   - minor
+  - major
   internal:
   - minor
+  - major
