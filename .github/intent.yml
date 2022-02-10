@@ -4,13 +4,19 @@ intent:
     intent: minor
   - id: ec4ad85080e999be2c49b7ed6e4e2909e7ecbbf3
     intent: major
+  - id: 8154aa533b517d42ba0f78bb21bd3caeb1916507
+    intent: major
   external:
   - id: fe1ac5a829cd58aecbdd29450865790cd9e01030
     intent: major
   - id: ec4ad85080e999be2c49b7ed6e4e2909e7ecbbf3
     intent: major
+  - id: 8154aa533b517d42ba0f78bb21bd3caeb1916507
+    intent: major
   internal:
   - id: fe1ac5a829cd58aecbdd29450865790cd9e01030
     intent: major
   - id: ec4ad85080e999be2c49b7ed6e4e2909e7ecbbf3
+    intent: minor
+  - id: 8154aa533b517d42ba0f78bb21bd3caeb1916507
     intent: minor
