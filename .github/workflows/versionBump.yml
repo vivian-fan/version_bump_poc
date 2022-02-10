@@ -38,6 +38,12 @@ jobs:
         id: branch_name
         run: echo "::set-output name=branch_name::$GITHUB_REF"
         
+      - name: Get base branch
+        run: echo $GITHUB_BASE_REF
+        
+      - name: Get source branch
+        run: echo $GITHUB_HEAD_REF
+        
 #   update-yaml:
 #     needs: version
 #     runs-on: ubuntu-latest
