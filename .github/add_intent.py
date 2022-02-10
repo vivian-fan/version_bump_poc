@@ -10,7 +10,7 @@ import json
 # Because the intent has been merged from feature branch to target branch
 # We can get it from target branch
 target_branch = str(sys.argv[1])
-intent_id = str(sys.argv[2])
+intent_id = str(sys.argv[3])
 
 target_path = './' + target_branch
 if os.path.exists(target_path):
