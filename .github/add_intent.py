@@ -49,6 +49,7 @@ print('debug', 'intent_mgmt_content after add: ', intent_mgmt_content)
 try:
     repo = git.Repo(target_path)
     repo.git.add(update=True)
+    repo.git.add(['intent.yml'])
     repo.index.commit('add intent to' + target_branch)
     repo.git.push("origin", target_branch)
 except Exception as e:
