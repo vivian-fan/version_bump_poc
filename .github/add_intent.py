@@ -16,7 +16,7 @@ if os.path.exists(target_path):
     shutil.rmtree(target_path)
 os.mkdir(target_path)
 
-feature_branch = str(sys.argv[1])
+feature_branch = str(sys.argv[3])
 
 fearure_path = './' + feature_branch
 if os.path.exists(fearure_path):
