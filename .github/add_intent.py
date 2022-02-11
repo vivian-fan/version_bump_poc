@@ -16,13 +16,21 @@ if os.path.exists(target_path):
     shutil.rmtree(target_path)
 os.mkdir(target_path)
 
+feature_branch = str(sys.argv[1])
+
+fearure_path = './' + feature_branch
+if os.path.exists(fearure_path):
+    shutil.rmtree(fearure_path)
+os.mkdir(fearure_path)
+
 username = "vivian-fan"
 password = sys.argv[2]
 remote = f"https://{username}:{password}@github.com/vivian-fan/version_bump_poc.git"
 
 clone_repo_target = git.Repo.clone_from(remote, target_path, branch=target_branch)
+clone_repo_feature = git.Repo.clone_from(remote, fearure_path, branch=feature_branch)
 
-with open(target_path + '/intent.yml', 'r') as intent_file:
+with open(fearure_path + '/intent.yml', 'r') as intent_file:
     intent_file_content = yaml.safe_load(intent_file)
 
 # Read intent_list from .github/intent.yml from target branch
