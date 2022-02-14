@@ -11,7 +11,7 @@ jobs:
   calculate-version:
     if: |
       github.event_name == 'pull_request' ||
-      (github.event_name == 'create' &&  ${{ contains(github.ref, 'refs/heads/production_release') }})
+      (github.event_name == 'create' && contains(github.ref, 'refs/heads/production_release'))
 
     runs-on: ubuntu-latest
     outputs:
