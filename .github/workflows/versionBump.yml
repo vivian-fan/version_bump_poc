@@ -43,6 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJSON(needs.version.outputs.matrix)}}
+      fail-fast: true
       max-parallel: 1
     steps:
       - name: Checkout
