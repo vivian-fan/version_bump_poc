@@ -4,13 +4,19 @@ intent:
     intent: minor
   - id: f3
     intent: minor
+  - id: f4
+    intent: major
   external:
   - id: f1
     intent: minor
   - id: f3
     intent: minor
+  - id: f4
+    intent: major
   internal:
   - id: f1
     intent: minor
   - id: f3
+    intent: major
+  - id: f4
     intent: major
