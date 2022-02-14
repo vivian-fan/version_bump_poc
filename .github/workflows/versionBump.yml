@@ -38,25 +38,25 @@ jobs:
         id: branch_name
         run: echo "::set-output name=branch_name::$GITHUB_REF"
         
-#   update-yaml:
-#     needs: version
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix: ${{fromJSON(needs.version.outputs.matrix)}}
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
+  update-yaml:
+    needs: version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJSON(needs.version.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-#       - name: Update Version on Yaml File
-#         uses: fjogeleit/yaml-update-action@master
-#         with:
-#           valueFile: ${{ matrix.file }}
-#           propertyPath: info.version
-#           value: ${{ matrix.version }}
-#           commitChange: true
-#           updateFile: true
-#           targetBranch: ${{ needs.version.outputs.branch_name }}
-#           masterBranchName: master
-#           createPR: false
-#           branch:  ${{ needs.version.outputs.branch_name }}
-#           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
+      - name: Update Version on Yaml File
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: ${{ matrix.file }}
+          propertyPath: info.version
+          value: ${{ matrix.version }}
+          commitChange: true
+          updateFile: true
+          targetBranch: ${{ needs.version.outputs.branch_name }}
+          masterBranchName: master
+          createPR: false
+          branch:  ${{ needs.version.outputs.branch_name }}
+          message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
