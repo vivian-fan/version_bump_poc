@@ -1,10 +1,4 @@
 intent:
-  data_science:
-  - id: f1
-    intent: minor
-  external:
-  - id: f1
-    intent: minor
-  internal:
-  - id: f1
-    intent: minor
+  data_science: []
+  external: []
+  internal: []
