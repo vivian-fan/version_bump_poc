@@ -12,7 +12,7 @@ import json
 def get_remote():
     username = "vivian-fan"
     password = sys.argv[1]
-    remote = f"https://{username}:{password}@github.com/vivian-fan/hotfix_release_version.git"
+    remote = f"https://{username}:{password}@github.com/vivian-fan/version_bump_poc.git"
     return remote
 
 
