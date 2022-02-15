@@ -2,9 +2,15 @@ intent:
   data_science:
   - id: f1
     intent: major
+  - id: f2
+    intent: minor
   external:
   - id: f1
     intent: major
+  - id: f2
+    intent: minor
   internal:
   - id: f1
+    intent: minor
+  - id: f2
     intent: minor
