@@ -7,7 +7,7 @@ import json
 from json.decoder import JSONDecodeError
 
 def get_intents():
-    with open('./' + feature_path'+'/intent.yml', 'r') as stream:
+    with open(feature_path + '/intent.yml', 'r') as stream:
         return yaml.safe_load(stream)
 
 def get_version_from_branch(branch_name, spec_file_name):
