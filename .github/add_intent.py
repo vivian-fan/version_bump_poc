@@ -36,7 +36,7 @@ def push_to_origin(intent_mgmt_content, target_path, target_branch):
         intent_mgmt_file.write(yaml.dump(intent_mgmt_content, default_flow_style=False))
     try:
         repo = git.Repo(target_path)
-        repo.git.add([target_path + '/.github/intent.yml'])
+        repo.git.add(update=True)
         repo.index.commit("add intent to " + target_branch)
         repo.git.push("origin", target_branch)
     except Exception as e:
