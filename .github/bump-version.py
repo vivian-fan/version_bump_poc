@@ -7,7 +7,7 @@ import json
 from json.decoder import JSONDecodeError
 
 def get_intents():
-    with open('intent.yml', 'r') as stream:
+    with open('./' + feature_path'+'/intent.yml', 'r') as stream:
         return yaml.safe_load(stream)
 
 def get_version_from_branch(branch_name, spec_file_name):
@@ -41,23 +41,31 @@ def compute_version(intent, latest_release_version, target_branch_version):
     
 # Get target_branch and release branch version
 target_branch = str(sys.argv[1])
+feature_branch = str(sys.argv[2])
 
 release_path = './release'
 target_path = './' + target_branch
+feature_path = './' + feature_branch
 
 if os.path.exists(release_path):
     shutil.rmtree(release_path)
 
 if os.path.exists(target_path):
     shutil.rmtree(target_path)
+    
+if os.path.exists(feature_path):
+    shutil.rmtree(feature_path)
 
 os.mkdir(release_path)
 os.mkdir(target_path)
+os.mkdir(feature_path)
 
 clone_repo_target = None
 clone_repo_release = None
+clone_repo_feature = None
 
 clone_repo_target = git.Repo.clone_from('https://github.com/vivian-fan/version_bump_poc.git', target_path, branch=target_branch)
+clone_repo_feature = git.Repo.clone_from('https://github.com/vivian-fan/version_bump_poc.git', feature_path, branch=feature_branch)
 
 release_branches = []
 
