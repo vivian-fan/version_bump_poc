@@ -27,7 +27,7 @@ def get_intents(path):
         intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
     if intent_mgmt_content == None or len(intent_mgmt_content) == 0:
         intent_mgmt_content = {}
-        intent_mgmt_content["intent"] = []
+        intent_mgmt_content["intent"] = {}
     return intent_mgmt_content
 
 
@@ -75,6 +75,8 @@ print(
 # Append intent in intent_list
 intent_id = str(sys.argv[3])
 for file_key in intent_file_content["intent"]:
+    if file_key not in intent_mgmt_content["intent"]:
+        intent_mgmt_content["intent"][file_key] = []
     intent_mgmt_content["intent"][file_key].append(
         {"id": intent_id, "intent": intent_file_content["intent"][file_key]}
     )
