@@ -10,7 +10,7 @@ on:
 jobs:
   calculate-version:
     if: |
-      (github.event_name == 'pull_request' && ${{ github.event.pull_request.merged }}) ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged) ||
       (github.event_name == 'create' && contains(github.ref, 'refs/heads/production_release'))
 
     runs-on: ubuntu-latest
