@@ -1,1 +1,7 @@
-
+intent:
+  external:
+  - id: f1
+    intent: minor
+  internal:
+  - id: f1
+    intent: major
