@@ -27,7 +27,7 @@ def get_intents(path):
         intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
     if intent_mgmt_content == None or len(intent_mgmt_content) == 0:
         intent_mgmt_content = {}
-        intent_mgmt_content["intent"] = []
+        intent_mgmt_content["intent"] = {}
     return intent_mgmt_content
 
 
@@ -106,7 +106,6 @@ for file in released_intents["intent"]:
     if file in dev_intents["intent"]:
         for intent_dic in released_intents["intent"][file]:
             if intent_dic in dev_intents["intent"][file]:
-                print("debug iterate, ", intent_dic, " will be removed")
                 dev_intents["intent"][file].remove(intent_dic)
 
 push_to_origin(dev_intents, dev_path, "develop")
