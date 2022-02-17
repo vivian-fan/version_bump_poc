@@ -107,8 +107,6 @@ for file in released_intents['intent']:
             if intent_dic in dev_intents['intent'][file]:
                 print('debug iterate, ', intent_dic, ' will be removed')
                 dev_intents['intent'][file].remove(intent_dic)
-                
-print('debug', dev_intents)
 
 push_to_origin(dev_intents, dev_path, 'develop')
 
