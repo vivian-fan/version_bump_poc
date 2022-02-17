@@ -6,7 +6,8 @@ on:
     types: [closed]
 
 jobs:
-  version:
+  compute-version:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.semver.outputs.matrix }}
@@ -39,10 +40,10 @@ jobs:
         run: echo "::set-output name=branch_name::$GITHUB_REF"
         
   update-yaml:
-    needs: version
+    needs: compute-version
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJSON(needs.version.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.compute-version.outputs.matrix)}}
       fail-fast: true
       max-parallel: 1
     steps:
@@ -57,8 +58,8 @@ jobs:
           value: ${{ matrix.version }}
           commitChange: true
           updateFile: true
-          targetBranch: ${{ needs.version.outputs.branch_name }}
+          targetBranch: ${{ needs.compute-version.outputs.branch_name }}
           masterBranchName: master
           createPR: false
-          branch:  ${{ needs.version.outputs.branch_name }}
+          branch:  ${{ needs.compute-version.outputs.branch_name }}
           message: Bump version to ${{ matrix.version }} in ${{ matrix.file }}
