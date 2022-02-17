@@ -5,6 +5,10 @@ intent:
   external:
   - id: f1
     intent: minor
+  - id: f3
+    intent: major
   internal:
   - id: f1
+    intent: major
+  - id: f3
     intent: major
