@@ -26,7 +26,7 @@ def get_intents(path):
     with open(path + "/.github/intent.yml", "r") as intent_mgmt_file:
         intent_mgmt_content = yaml.safe_load(intent_mgmt_file)
     if len(intent_mgmt_content) == 0:
-        intent_mgmt_content['intent'] = []
+        intent_mgmt_content["intent"] = []
     return intent_mgmt_content
 
 
@@ -81,7 +81,7 @@ print(
 # If the event is PR merge, add hotfix to release
 event = sys.argv[2]
 if event == "pull_request":
-    print('pull request triggered')
+    print("pull request triggered")
     hotfix_branch = sys.argv[3]
     hotfix_path = "./hotfix"
     clone_repo_hotfix = get_clone_repo(remote, hotfix_path, hotfix_branch)
@@ -92,27 +92,27 @@ if event == "pull_request":
         )
 
 # Delete released_intents from master_intents
-for file in released_intents['intent']:
-    if file in master_intents['intent']:
-        for intent_dic in released_intents['intent'][file]:
-            if intent_dic in master_intents['intent'][file]:
-                master_intents['intent'][file].remove(intent_dic)
+for file in released_intents["intent"]:
+    if file in master_intents["intent"]:
+        for intent_dic in released_intents["intent"][file]:
+            if intent_dic in master_intents["intent"][file]:
+                master_intents["intent"][file].remove(intent_dic)
 
-push_to_origin(master_intents, master_path, 'master')
-
-# Delete released_intents from dev_intents
-for file in released_intents['intent']:
-    if file in dev_intents['intent']:
-        for intent_dic in released_intents['intent'][file]:
-            if intent_dic in dev_intents['intent'][file]:
-                print('debug iterate, ', intent_dic, ' will be removed')
-                dev_intents['intent'][file].remove(intent_dic)
-
-push_to_origin(dev_intents, dev_path, 'develop')
+push_to_origin(master_intents, master_path, "master")
 
 # Delete released_intents from dev_intents
-for file in released_intents['intent']:
-    released_intents['intent'][file] = []
+for file in released_intents["intent"]:
+    if file in dev_intents["intent"]:
+        for intent_dic in released_intents["intent"][file]:
+            if intent_dic in dev_intents["intent"][file]:
+                print("debug iterate, ", intent_dic, " will be removed")
+                dev_intents["intent"][file].remove(intent_dic)
+
+push_to_origin(dev_intents, dev_path, "develop")
+
+# Delete released_intents from dev_intents
+for file in released_intents["intent"]:
+    released_intents["intent"][file] = []
 
 push_to_origin(released_intents, release_path, latest_release_branch)
 
