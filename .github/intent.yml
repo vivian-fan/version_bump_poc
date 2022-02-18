@@ -1,1 +1,4 @@
-
+intent:
+  external:
+  - id: f5
+    intent: major
