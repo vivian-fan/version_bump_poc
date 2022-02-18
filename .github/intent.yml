@@ -9,6 +9,8 @@ intent:
     intent: minor
   - id: f3
     intent: major
+  - id: dev-f5
+    intent: major
   internal:
   - id: f1
     intent: major
