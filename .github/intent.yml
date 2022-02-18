@@ -18,3 +18,5 @@ intent:
     intent: major
   - id: f4
     intent: minor
+  - id: f6
+    intent: major
