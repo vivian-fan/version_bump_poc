@@ -2,6 +2,8 @@ intent:
   external:
   - id: f2
     intent: minor
+  - id: f3
+    intent: major
   internal:
   - id: f1
     intent: minor
