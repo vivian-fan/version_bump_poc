@@ -1,1 +1,4 @@
-
+intent:
+  internal:
+  - id: f1
+    intent: minor
