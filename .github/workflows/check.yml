@@ -4,16 +4,31 @@ on:
   pull_request:
     branches: [ master, develop ]
 
+concurrency: version_bump_automation
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       
+      - name: Install python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          chmod +x ./.github/intall-py-dependecies.sh
+          ./.github/intall-py-dependecies.sh
+      
       - name: Run check script
-        run: python ./.github/intent_file_check.py
+        id: check
+        run: |
+          echo "::set-output name=result::$(python ./.github/intent_file_check.py $GITHUB_HEAD_REF)"
         
-      - name: Create status check
+      - name: Create status check Pass
+        if: contains( steps.check.outputs.result, "True" )
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
