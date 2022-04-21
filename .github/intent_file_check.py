@@ -43,7 +43,7 @@ remote = get_remote()
 
 clone_repo_feature = get_clone_repo(remote, feature_path, feature_branch)
 
-intent_file = get_intent_file(target_path)
+intent_file = get_intent_file(feature_path)
 if intent_file == None:
   print(False)
   sys.exit("Cannot find intent file")
