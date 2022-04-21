@@ -5,7 +5,7 @@ import shutil
 import yaml
 import git
 import json
-from schema import Schema, SchemaError
+from jsonschema import validate
 
 def get_remote():
     username = "vivian-fan"
@@ -51,16 +51,16 @@ if intent_file == None:
   
 intent_content = read_intents(feature_path, intent_file)
 
-intent_schema = Schema({
-    "intent": {}
-})
+schema = """
+type: object
+properties:
+  intent:
+    type: array
+"""
 
-try:
-    intent_schema.validate(intent_content)
-    print(False)
-    sys.exit("Cannot find intent section")
-except SchemaError as se:
-    raise se
+validate(yaml.load(intent_content), yaml.load(schema))
+print(False)
+sys.exit("Cannot find intent section")
 
 for file, version in intent_content['intent'].items():
   if version != "major" and version !="minor":
