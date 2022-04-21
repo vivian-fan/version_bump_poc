@@ -28,7 +28,7 @@ jobs:
           echo "::set-output name=result::$(python ./.github/intent_file_check.py $GITHUB_HEAD_REF)"
         
       - name: Create status check Pass
-        if: contains( steps.check.outputs.result, "True" )
+        if: contains(steps.check.outputs.result, 'True')
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
