@@ -10,7 +10,7 @@ from jsonschema import validate
 def get_remote():
     username = "vivian-fan"
     password = "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"
-    remote = f"https://{username}:{password}@github.com/vivian-fan/version_bump_poc.git"
+    remote = f"https://{username}:{password}@github.com/clari/clari-apis.git"
     return remote
 
   
