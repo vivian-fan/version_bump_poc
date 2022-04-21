@@ -58,7 +58,7 @@ properties:
     type: array
 """
 
-validate(yaml.safe_load(intent_content), yaml.safe_load(schema))
+validate(intent_content, yaml.safe_load(schema))
 print(False)
 sys.exit("Cannot find intent section")
 
