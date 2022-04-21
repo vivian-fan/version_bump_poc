@@ -58,9 +58,11 @@ properties:
     type: [array, object]
 """
 
-validate(intent_content, yaml.safe_load(schema))
-print(False)
-sys.exit("Cannot find intent section")
+try:
+    validate(intent_content, yaml.safe_load(schema))
+except jsonschema.exceptions.ValidationError as error:
+    print(False)
+    sys.exit("Cannot find intent section")
 
 for file, version in intent_content['intent'].items():
   if version != "major" and version !="minor":
