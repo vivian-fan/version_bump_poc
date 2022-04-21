@@ -4,6 +4,8 @@ intent:
     intent: minor
   - id: f3
     intent: major
+  - id: f4
+    intent: major
   internal:
   - id: f1
     intent: minor
