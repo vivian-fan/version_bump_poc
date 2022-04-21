@@ -55,6 +55,7 @@ schema = """
 type: object
 properties:
   intent:
+    type: [array, object]
 """
 
 validate(intent_content, yaml.safe_load(schema))
