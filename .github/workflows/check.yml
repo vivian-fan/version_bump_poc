@@ -1,0 +1,26 @@
+name: Intent File Check
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run check script
+        run: python ./.github/intent_file_check.py
+        
+      - name: Create status check
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          BUILD_COMMIT = $(git rev-parse HEAD)
+          curl \
+          -X POST \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/vivian-fan/version_bump_poc/check-runs \
+          -d '{"name":"build", "head_sha": "'"$BUILD_COMMIT"'", "status": "completed", "conclusion": "success" }'
